@@ -26,7 +26,7 @@
 
       <div class="customItem">
         <tr>
-        <td> <input disabled recname="name" type="text" id="name" name="name[]" value="id"/> </td>
+        <td> <input readonly recname="name" type="text" id="name" name="name[]" value="id"/> </td>
         <td>
           <?php
             $db_field_types = array(
@@ -34,7 +34,7 @@
               'NONE'        => 'NONE', 
             );
           ?>
-          <?php echo form_dropdown("key[]", $db_field_types, form_error("db_field_type").'</span>', 'recname="key" class="select" id="null" disabled'); ?>
+          <?php echo form_dropdown("key[]", $db_field_types, form_error("db_field_type").'</span>', 'recname="key" class="select" id="null" readonly'); ?>
         </td>
         <td>
           <?php
@@ -43,13 +43,13 @@
               'FALSE'        => 'FALSE',   
             );
           ?>
-          <?php echo form_dropdown("auto_inc[]", $auto_inc, form_error("db_field_type").'</span>', 'recname="auto_inc" class="select" id="auto_inc" disabled'); ?>
+          <?php echo form_dropdown("auto_inc[]", $auto_inc, form_error("db_field_type").'</span>', 'recname="auto_inc" class="select" id="auto_inc" readonly'); ?>
         </td>
         <td>
           <input type="text" recname="length" class="" id="length" name="length[]" value="5"/>
         </td>
         <td>
-          <input disabled type="text" recname="default" id="default" name="default[]" />
+          <input readonly type="text" recname="default" id="default" name="default[]" />
         </td>
         <td>
           <?php
@@ -58,7 +58,7 @@
             'TRUE'       => 'TRUE',
             );
           ?>
-          <?php echo form_dropdown("null[]", $db_field_types, form_error("type").'</span>', 'recname="null" id="null" class="select" disabled'); ?>
+          <?php echo form_dropdown("null[]", $db_field_types, form_error("type").'</span>', 'recname="null" id="null" class="select" readonly'); ?>
         </td>
 
         <td>
@@ -95,7 +95,7 @@
               'YEAR'          => 'YEAR',
               );
             ?>
-            <?php echo form_dropdown("type[]", $db_field_types, form_error("type").'</span>', 'recname="type" class="select" id="type" disabled'); ?>
+            <?php echo form_dropdown("type[]", $db_field_types, form_error("type").'</span>', 'recname="type" class="select" id="type" readonly'); ?>
           </td>
         </tr>
       </div>
