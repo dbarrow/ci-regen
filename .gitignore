@@ -1,0 +1,19 @@
+#Ignore OS Related/Generic
+Thumbs.db
+Desktop.ini
+
+# Ignore Custom config files
+application/config/development/*
+application/config/testing/*
+application/config/production/*
+
+# but leave the config folders there
+!application/config/development/index.html
+!application/config/testing/index.html
+!application/config/production/index.html
+
+#Ignore installed.txt
+application/core_modules/install/installed.txt
+
+# Ignore all custom modules.
+application/modules/*
