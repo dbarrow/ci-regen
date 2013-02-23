@@ -17,3 +17,5 @@ application/core_modules/install/installed.txt
 
 # Ignore all custom modules.
 application/modules/*
+
+!application/modules/index.html
