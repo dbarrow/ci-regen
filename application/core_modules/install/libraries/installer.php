@@ -59,11 +59,11 @@ class Installer
         $this->CI->load->helper('file');
         
         $db_config = $this->CI->load->view('templates/database.php', $data, true);       //generate the database config file
-        if(ENVIRONMENT = 'development')
+        if(ENVIRONMENT == 'development')
         {
             $result = write_file('application/config/development/database.php', $db_config); //write the generated file to the config folder           
         }
-        else if(ENVIRONMENT = 'production')
+        else if(ENVIRONMENT == 'production')
         {
             $result = write_file('application/config/production/database.php', $db_config); //write the generated file to the config folder
         }
