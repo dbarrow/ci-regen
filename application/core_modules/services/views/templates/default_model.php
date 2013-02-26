@@ -5,7 +5,7 @@ $contents .= "
 
 class " . $service_name . "_model extends MY_Model {
 	protected \$_table		   = '" . $service_name . "';
-	protected \$key			   = 'id';
+	protected \$key			   = '" . $primary_key['name'] . "';
 	protected \$soft_deletes   = false;
 	protected \$date_format	   = 'datetime';
 	protected \$set_created	   = false;

@@ -26,7 +26,7 @@
 
       <div class="customItem">
         <tr>
-        <td> <input readonly recname="name" type="text" id="name" name="name[]" value="id"/> </td>
+        <td> <input recname="primary_name" type="text" id="primary_name" name="primary_name" value="id"/> </td>
         <td>
           <?php
             $db_field_types = array(
@@ -34,7 +34,7 @@
               'NONE'        => 'NONE', 
             );
           ?>
-          <?php echo form_dropdown("key[]", $db_field_types, form_error("db_field_type").'</span>', 'recname="key" class="select" id="null" readonly'); ?>
+          <?php echo form_dropdown("primary_key", $db_field_types, form_error("db_field_type").'</span>', 'recname="primary_key" class="select" id="primary_key" readonly'); ?>
         </td>
         <td>
           <?php
@@ -43,13 +43,13 @@
               'FALSE'        => 'FALSE',   
             );
           ?>
-          <?php echo form_dropdown("auto_inc[]", $auto_inc, form_error("db_field_type").'</span>', 'recname="auto_inc" class="select" id="auto_inc" readonly'); ?>
+          <?php echo form_dropdown("primary_auto_inc", $auto_inc, form_error("db_field_type").'</span>', 'recname="primary_auto_inc" class="select" id="aprimary_auto_inc" readonly'); ?>
         </td>
         <td>
-          <input type="text" recname="length" class="" id="length" name="length[]" value="5"/>
+          <input type="text" recname="primary_length" class="" id="primary_length" name="primary_length" value="5"/>
         </td>
         <td>
-          <input readonly type="text" recname="default" id="default" name="default[]" />
+          <input readonly type="text" recname="primary_default" id="primary_default" name="primary_default" />
         </td>
         <td>
           <?php
@@ -58,7 +58,7 @@
             'TRUE'       => 'TRUE',
             );
           ?>
-          <?php echo form_dropdown("null[]", $db_field_types, form_error("type").'</span>', 'recname="null" id="null" class="select" readonly'); ?>
+          <?php echo form_dropdown("primary_null", $db_field_types, form_error("type").'</span>', 'recname="primary_null" id="primary_null" class="select" readonly'); ?>
         </td>
 
         <td>
@@ -95,7 +95,7 @@
               'YEAR'          => 'YEAR',
               );
             ?>
-            <?php echo form_dropdown("type[]", $db_field_types, form_error("type").'</span>', 'recname="type" class="select" id="type" readonly'); ?>
+            <?php echo form_dropdown("primary_type", $db_field_types, form_error("type").'</span>', 'recname="primary_type" class="select" id="primary_type" readonly'); ?>
           </td>
         </tr>
       </div>
@@ -126,7 +126,7 @@
             <?php
             $db_field_types = array(
               'NONE'        => 'NONE',   
-              'PRIMARY'       => 'PRIMARY',
+              'FOREIGN'       => 'FOREIGN',
               );
               ?>
               <?php echo form_dropdown("key[]", $db_field_types, form_error("db_field_type").'</span>', 'recname="key" class="select" id="null"'); ?>

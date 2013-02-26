@@ -33,12 +33,12 @@ class Services extends AuthController {
     {     
         if ($this->input->post('submit'))
         {  
-            $this->load->model('services_model');
-            $fields = $this->input->post();
-            $data['name'] = $this->input->post('service_name');
-            $data['enabled'] = true;
-            $this->services_model->insert($data);
+            $fields = $this->input->post();                     
             $this->servicebuilder->build_service($fields);
+
+            $data['name'] = $this->input->post('service_name');
+            $data['enabled'] = true;   
+            $this->services_model->insert($data);
             redirect('services');
         }
         else
@@ -50,10 +50,9 @@ class Services extends AuthController {
 
     public function remove_service($service_name)
     {
-        $where = array('name'=>$service_name);
-        $this->load->model('services/services_model');
-        $this->services_model->delete_by($where);
         $this->servicebuilder->remove_service($service_name);
+        $where = array('name'=>$service_name);
+        $this->services_model->delete_by($where);
 
         redirect('services');
     }

@@ -59,17 +59,26 @@ class Servicebuilder
     {
         //The name of the service
         
-        $service_name = $fields['service_name'];        
+        $service_name = $fields['service_name'];  
+        $primary_key = array(
+                'name' => $fields['primary_name'],
+                'key' => $fields['primary_key'],
+                'auto_inc' => $fields['primary_auto_inc'],
+                'length' => $fields['primary_length'],
+                'default' => $fields['primary_default'],
+                'null' => $fields['primary_null'],
+                'type' => $fields['primary_type'],
+            );       
 
         if (!$this->build_module($service_name)) {
             return false;
         }
 
-        if (!$this->write_files($service_name)) {
+        if (!$this->write_files($service_name, $primary_key)) {
             return false;
         }
 
-        if (!$this->write_db($service_name, $fields)) {
+        if (!$this->write_db($service_name, $fields, $primary_key)) {
             return false;
         }
 
@@ -147,9 +156,11 @@ class Servicebuilder
      * 
      * @return boolean
      */
-    private function write_files($service_name)
+    private function write_files($service_name, $primary_key)
     {
         $data['service_name'] = $service_name;
+        $data['primary_key'] = $primary_key;
+
 
         //set the template files for building model and controller and inject service name
         $controller = $this->CI->load->view('templates/default_controller.php', $data, true);
@@ -175,18 +186,25 @@ class Servicebuilder
      * 
      * @return boolean
      */
-    private function write_db($service_name, $fields)
+    private function write_db($service_name, $fields, $primary_key)
     {          
+        //convert fields array to acceptable input for add_field function
         $data = $this->convert_fields_array($fields);
-        //build the tables and fields
 
+        //add primary key to fields
+        $this->CI->dbforge->add_field($primary_key['name'] . " int(" . $primary_key['length'] . ") NOT NULL AUTO_INCREMENT");
+
+        //add remainder of fields
         $this->CI->dbforge->add_field($data['fields_arr']);
 
+        //add Foreign keys
         foreach($data['key_arr'] as $key)
         {
-            $this->CI->dbforge->add_key($key, TRUE);
+            $this->CI->dbforge->add_key($key);
         }
 
+        //add primary key
+        $this->CI->dbforge->add_key($primary_key['name'], TRUE);
         $this->CI->dbforge->create_table($service_name);             
        
         return true;
@@ -225,8 +243,9 @@ class Servicebuilder
                 {
                     $fields_arr[$field_names[$i]]['default'] = $field_defaults[$i];
                 }
-                
-                if($field_keys[$i] == 'PRIMARY')
+
+                //capture foreign keys
+                if($field_keys[$i] == 'FOREIGN')
                 {
                     array_push($key_arr, $field_names[$i]);
                 }
