@@ -121,7 +121,7 @@ Example:
 -service database record name field: books
 </pre>
 
-Create primary key.  Application conventions use ‘id’ as the primary key.  Currently the primary key is hard coded to ‘id’.  Allowing any id is a simple enhancement that will be added as time permits.
+Add primary key.  
 
 Add as many fields as you would like.	
 
