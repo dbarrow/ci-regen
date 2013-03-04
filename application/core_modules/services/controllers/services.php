@@ -48,6 +48,36 @@ class Services extends AuthController {
         }
     }   
 
+    public function from_database()
+    {     
+        if ($this->input->post('submit'))
+        {  
+            $table = $this->input->post('table');              
+            $this->servicebuilder->build_from_db($table);
+
+            $data['name'] = $this->input->post('table');
+            $data['enabled'] = true;   
+            $this->services_model->insert($data);
+
+            redirect('services');
+        }
+        else
+        {        
+            $services = $this->services_model->select_name()->get_all();
+            $tables = $this->servicebuilder->get_non_service_tables($services);  
+           
+            $options = array();    
+            foreach ($tables as $table)
+            {
+                $options[$table] = $table;  
+            }
+
+            $data['tables'] = $options;
+            $data['main_content'] = $this->load->view("services/from_database", $data, true);
+            $this->load->view($this->template, $data);
+        }
+    }   
+
     public function remove_service($service_name)
     {
         $this->servicebuilder->remove_service($service_name);

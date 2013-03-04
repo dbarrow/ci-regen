@@ -2,13 +2,13 @@
 
 class User_profiles_model extends MY_Model {
 
-	protected $_table		= 'user_profiles';
-	protected $key			= 'id';
-	protected $soft_deletes	= false;
-	protected $date_format	= 'datetime';
-	protected $set_created	= false;
-	protected $set_modified = false;
-	protected $created_field = 'created_on';
+	protected $_table		  = 'user_profiles';
+	protected $primary_key    = 'id';
+	protected $soft_deletes	  = false;
+	protected $date_format	  = 'datetime';
+	protected $set_created	  = false;
+	protected $set_modified   = false;
+	protected $created_field  = 'created_on';
 	protected $modified_field = 'modified_on';
 
 	/**

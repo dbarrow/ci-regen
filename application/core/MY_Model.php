@@ -620,6 +620,7 @@ class MY_Model extends CI_Model
      * GLOBAL SCOPES
      * ------------------------------------------------------------ */
 
+
     /**
      * Return the next call as an array rather than an object
      */

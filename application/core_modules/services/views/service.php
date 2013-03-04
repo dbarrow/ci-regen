@@ -24,6 +24,7 @@ tr{
 		<th>Name</th> 
 		<th>Max Len</th> 
 		<th>Type</th> 
+		<th>Default</th> 
 		<th>Primary Key</th> 
 	</tr> 
 	<?php 
@@ -33,6 +34,7 @@ tr{
 			<td><?=  $field->name?></td> 
 			<td><?=  $field->max_length?></td> 
 			<td><?=  $field->type?></td> 
+			<td><?=  $field->default?></td> 
 			<td><?=  $field->primary_key?></td> 
 		</tr>
 	<? endforeach ?>

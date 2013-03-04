@@ -47,7 +47,7 @@ class Servicebuilder
     /**
      * Build Service
      *
-     * The entry function to the service builder
+     * Build new service. 
      *
      * @access public
      *
@@ -57,9 +57,9 @@ class Servicebuilder
      */
     public function build_service($fields) 
     {
-        //The name of the service
-        
+        //The name of the service        
         $service_name = $fields['service_name'];  
+
         $primary_key = array(
                 'name' => $fields['primary_name'],
                 'key' => $fields['primary_key'],
@@ -85,6 +85,44 @@ class Servicebuilder
         return true;
 
     }//end build_service()
+
+    //--------------------------------------------------------------------
+
+    /**
+     * Build from db
+     *
+     * Build new service from existing database table. 
+     *
+     * @access public
+     *
+     * @param array $service_name name of the service to be built.
+     * 
+     * @return boolean
+     */
+    public function build_from_db($service_name)
+    {
+        //get table info from db
+        $fields_data = $this->CI->db->field_data($service_name);
+
+        //find the primary key
+        foreach ($fields_data as $field) 
+        {
+            if($field->primary_key==1)
+            {
+                $primary_key = $field;
+            }
+        }
+
+        //build the folder structure for model
+        if (!$this->build_module($service_name)) {
+            return false;
+        }
+
+        //write the generic files
+        if (!$this->write_files($service_name, (array)$primary_key)) {
+            return false;
+        }
+    }
 
     //--------------------------------------------------------------------
 
@@ -117,6 +155,23 @@ class Servicebuilder
     public function delete_field($service_name, $field)
     {
         $this->CI->dbforge->drop_column($service_name, $field);
+    }
+
+    public function get_non_service_tables($services)
+    {
+        //get all tables from database
+        $tables = $this->CI->db->list_tables();
+
+        //remove application tables
+        $tables = array_diff($tables, array('ci_sessions', 'login_attempts', 'roles', 'services', 'user_autologin', 'user_profiles', 'users'));
+
+        //remove tables that already have a service built
+        $results = array();
+        foreach($services as $service)
+        {
+            array_push($results,$service->name);
+        }
+        return array_diff($tables, $results);
     }
 
     //--------------------------------------------------------------------
@@ -257,4 +312,5 @@ class Servicebuilder
 
             return $data;     
     }
+
 }//end Servicebuilder
