@@ -128,7 +128,7 @@ class RS_REST_Controller extends REST_Controller
 
 		else 
 		{
-       		$this->response(array('status' => false, 'error' => 'Record not inserted'), 402); //no post values
+       		$this->response(array('status' => false, 'error' => 'Record not inserted'), 401); //no post values
 		}
 	}
 
