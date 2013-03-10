@@ -35,7 +35,6 @@ class RS_REST_Controller extends REST_Controller
 		parent::__construct();
 		$this->load->model($this->model, null, true);
 		header('Access-Control-Allow-Origin: *');	
-		header('Content-type: *');
 	}
 
 	//--------------------------------------------------------------------
