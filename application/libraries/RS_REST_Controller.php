@@ -109,7 +109,11 @@ class RS_REST_Controller extends REST_Controller
 	*/
 	public function index_post()
 	{
-		$post = $this->post(); 
+		$post = $this->post();
+		if(stripos($_SERVER["CONTENT_TYPE"], "application/json") === 0) 
+		{
+			$post = json_decode(file_get_contents("php://input"), true);
+		} 
 
 		if ($post) 
 		{
