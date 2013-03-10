@@ -113,10 +113,8 @@ class RS_REST_Controller extends REST_Controller
 		$post = $this->post();
 		if(!$post)
 		{
-			$post = json_decode($this->request->body());
+			$post = json_decode(file_get_contents("php://input"), true);
 		}
-		
-			//$post = json_decode(file_get_contents("php://input"), true);
 		
 
 		if ($post) 
