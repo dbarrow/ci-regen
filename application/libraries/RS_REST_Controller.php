@@ -35,6 +35,8 @@ class RS_REST_Controller extends REST_Controller
 		parent::__construct();
 		$this->load->model($this->model, null, true);
 		header('Access-Control-Allow-Origin: *');	
+		header('Access-Control-Allow-Methods: *');	
+
 	}
 
 	//--------------------------------------------------------------------
@@ -115,7 +117,6 @@ class RS_REST_Controller extends REST_Controller
 			$post = json_decode(file_get_contents("php://input"), true);
 		}
 		
-
 		if ($post) 
 		{
 			$success = $this->{$this->model}->insert($post);
