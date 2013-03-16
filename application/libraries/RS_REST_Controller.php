@@ -174,7 +174,7 @@ class RS_REST_Controller extends REST_Controller
 
 			else
 			{
-				$this->response(array('status' => false, 'error' => 'No PUT values'), 402);  //no put values
+				$this->response(array('status' => false, 'error' => 'No PUT values'), 305);  //no put values
 			}			
 		}		
 
