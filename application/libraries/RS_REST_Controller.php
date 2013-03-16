@@ -186,7 +186,7 @@ class RS_REST_Controller extends REST_Controller
 
 		  	if(!$record = $this->{$this->model}->get($id)) //no record in db to update
 		  	{
-		  		$this->response(array('status' => false, 'error' => 'Record does not exist'), 402); 
+		  		$this->response(array('status' => false, 'error' => 'Record does not exist'), 401); 
 		  	}
 
 		  	if($put)  //url contains query string. eg - api/books/?title=moby dick$hardback=true
