@@ -112,7 +112,10 @@ class RS_REST_Controller extends REST_Controller
 	*/
 	public function index_post()
 	{
+		//collect post information
 		$post = $this->post();
+		
+		//if no post data, check for json encoded data
 		if(!$post)
 		{
 			$post = json_decode(file_get_contents("php://input"), true);
@@ -150,7 +153,11 @@ class RS_REST_Controller extends REST_Controller
 	public function index_put() 
 	{
 	  	$query_string = $_SERVER['QUERY_STRING']; 
-	  	$put = $this->put();                      		
+	  	$put = $this->put();       
+	  	if(!$put)
+		{
+			$put = json_decode(file_get_contents("php://input"), true);
+		}               		
 
 	  	//*********************** Update Where ************************
 
