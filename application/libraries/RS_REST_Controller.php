@@ -1,7 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-// ------------------------------------------------------------------------
-
 /**
  * Rest Suite - Rest Controller
  *
@@ -11,10 +9,9 @@
  * @package   Rest Suite
  * @author    Darryl Barrow
  * @copyright Copyright (c) 2013, Traversepoint
- * @license   
+ * @license   MIT
  * @link      http://www.traversepoint.com
  * @since     Version 1.0
- * @filesource
  *
  */
 require APPPATH . '/libraries/REST_Controller.php';
@@ -34,10 +31,10 @@ class RS_REST_Controller extends REST_Controller
 	{
 		parent::__construct();
 		$this->load->model($this->model, null, true);
+		//headers for CORS(Cross-Origin-Resourse-Sharing)
 		header('Access-Control-Allow-Origin: *');	
 		header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');	
 		header('Access-Control-Allow-Headers: Content-Type');
-
 	}
 
 	//--------------------------------------------------------------------
@@ -45,9 +42,8 @@ class RS_REST_Controller extends REST_Controller
 	/**
 	*	Method: index_get()
 	*
-	*	get records.
+	*	Get record(s).  
 	*/
-
 	public function index_get()
 	{		
 		$id = $this->uri->segment('3');
@@ -60,7 +56,7 @@ class RS_REST_Controller extends REST_Controller
 				$records = $this->{$this->model}->get_many_by($get);
 				if($records)
 				{
-					$this->response($records);  //success
+					$this->response(array('status' => true), $records);  //success
 				}
 				else
 				{
@@ -74,7 +70,7 @@ class RS_REST_Controller extends REST_Controller
 
 	        	if ($record) 
 	        	{
-	        		$this->response($record);  //success
+	        		$this->response(array('status' => true), $record);  //success
 	        	}
 	        	else
 	        	{
@@ -95,8 +91,8 @@ class RS_REST_Controller extends REST_Controller
 	            	$this->response(array('status' => false, 'error' => 'No records found'), 404); //No records found
 	            }
 	        }
-	        
-    	}
+	    }
+
     	else
     	{
     		$this->response(array('status' => false, 'error' => 'Not Authorized'), 401);  //Not authorized
@@ -106,16 +102,16 @@ class RS_REST_Controller extends REST_Controller
 	//--------------------------------------------------------------------
 
 	/*
-		Method: index_post()
-
-		Create new record.
+	*	Method: index_post()
+	*
+	*	Create new record.
 	*/
 	public function index_post()
 	{
 		//collect post information
 		$post = $this->post();
-		
-		//if no post data, check for json encoded data
+
+		//if no post data, check for json encoded data		
 		if(!$post)
 		{
 			$post = json_decode(file_get_contents("php://input"), true);
@@ -132,7 +128,7 @@ class RS_REST_Controller extends REST_Controller
 			else
 
 			{
-				$this->response(array('status' => false, 'error' => "Unknown error occured"), 402); //error
+				$this->response(array('status' => false, 'error' => "Unknown error occured"), 400); //error
 			}    	
 		} 
 
@@ -145,15 +141,19 @@ class RS_REST_Controller extends REST_Controller
 	//--------------------------------------------------------------------
 
 	/*
-		Method: index_put()
-
-		Update record.
+	*	Method: index_put()
+	*
+	*	Update record(s).
 	*/
-
 	public function index_put() 
 	{
+	  	//collect query string data from url
 	  	$query_string = $_SERVER['QUERY_STRING']; 
-	  	$put = $this->put();       
+
+	  	//collect post information
+	  	$put = $this->put();
+
+	  	//if no put data, check body for json encoded data (used by angular.js, maybe others...)     
 	  	if(!$put)
 		{
 			$put = json_decode(file_get_contents("php://input"), true);
@@ -174,7 +174,7 @@ class RS_REST_Controller extends REST_Controller
 
 			else
 			{
-				$this->response(array('status' => false, 'error' => 'No PUT values'), 305);  //no put values
+				$this->response(array('status' => false, 'error' => 'No PUT values'), 400);  //no put values
 			}			
 		}		
 
@@ -186,10 +186,10 @@ class RS_REST_Controller extends REST_Controller
 
 		  	if(!$record = $this->{$this->model}->get($id)) //no record in db to update
 		  	{
-		  		$this->response(array('status' => false, 'error' => 'Record does not exist'), 401); 
+		  		$this->response(array('status' => false, 'error' => 'Record does not exist'), 400); 
 		  	}
 
-		  	if($put)  //url contains query string. eg - api/books/?title=moby dick$hardback=true
+		  	if($put)  //url contains query string. eg - api/books/?title=moby dick&hardback=true
 		  	{
 		  		if($this->{$this->model}->update($id,  $put))
 		  		{
@@ -199,30 +199,31 @@ class RS_REST_Controller extends REST_Controller
 
 			else 
 			{
-				$this->response(array('status' => false, 'error' => 'No PUT values'), 402);  //no put values
+				$this->response(array('status' => false, 'error' => 'No PUT values'), 400);  //no put values
 			}
 		}
 
 		else  //no id in url - Error
 		{
-		  	$this->response(array('status' => false, 'error' => 'No id in url'), 402); 
+		  	$this->response(array('status' => false, 'error' => 'No id in url'), 400); 
 		}
 	}
 
 	//--------------------------------------------------------------------
 
 	/*
-		Method: index_delete()
-
-		Delete record.
+	* 	Method: index_delete()
+    *
+    *	Delete record(s).
 	*/
 	public function index_delete()
 	{		  	
+		//collect query string data from url
 		$query_string = $_SERVER['QUERY_STRING']; 
 
 		if($query_string)  //is there a query string
 		{			
-			parse_str($query_string, $where);                   //convert query_string to associative array
+			parse_str($query_string, $where);  //convert query_string to associative array
 
 			if($this->{$this->model}->delete_by($where))  //update 
 			{
@@ -231,7 +232,7 @@ class RS_REST_Controller extends REST_Controller
 
 			else
 			{
-				$this->response(array('status' => false, 'error' => 'No PUT values'), 402);  //no put values
+				$this->response(array('status' => false, 'error' => 'No PUT values'), 400);  //no put values
 			}			
 		}		
 
@@ -242,18 +243,18 @@ class RS_REST_Controller extends REST_Controller
 
 			if($success)
 			{
-				$this->response(array('status' => true));  //success
+				$this->response(array('status' => true), 200);  //success
 			}
 
 			else
 			{
-				$this->response(array('status' => false, 'error' => 'Record not deleted or does not exist'), 402);  //Record not deleted
+				$this->response(array('status' => false, 'error' => 'Record not deleted or does not exist'), 400);  //Record not deleted
 			}
         }
 
         else
         {
-        	$this->response(array('status' => false, 'error' => 'No id in url'), 402); 
+        	$this->response(array('status' => false, 'error' => 'No id in url'), 400); 
         }
 	}	
 }
