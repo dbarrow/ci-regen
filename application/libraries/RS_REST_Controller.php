@@ -56,7 +56,7 @@ class RS_REST_Controller extends REST_Controller
 				$records = $this->{$this->model}->get_many_by($get);
 				if($records)
 				{
-					$this->response(array('status' => true), $records);  //success
+					$this->response($records);  //success
 				}
 				else
 				{
@@ -70,7 +70,7 @@ class RS_REST_Controller extends REST_Controller
 
 	        	if ($record) 
 	        	{
-	        		$this->response(array('status' => true), $record);  //success
+	        		$this->response($record);  //success
 	        	}
 	        	else
 	        	{
