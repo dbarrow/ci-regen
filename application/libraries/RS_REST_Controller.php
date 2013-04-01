@@ -31,10 +31,14 @@ class RS_REST_Controller extends REST_Controller
 	{
 		parent::__construct();
 		$this->load->model($this->model, null, true);
+		$this->load->library('auth/tank_auth');
 		//headers for CORS(Cross-Origin-Resourse-Sharing)
 		header('Access-Control-Allow-Origin: *');	
 		header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');	
 		header('Access-Control-Allow-Headers: Content-Type');
+
+		if (!$this->tank_auth->is_logged_in()) 								// logged in
+			$this->response(array('status' => false, 'error' => $this->model), 401); //No records found
 	}
 
 	//--------------------------------------------------------------------
@@ -56,7 +60,7 @@ class RS_REST_Controller extends REST_Controller
 				$records = $this->{$this->model}->get_many_by($get);
 				if($records)
 				{
-					$this->response($records);  //success
+					$this->response($records, 200);  //success
 				}
 				else
 				{

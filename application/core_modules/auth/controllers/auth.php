@@ -110,7 +110,6 @@ class Auth extends MX_Controller
 	function logout()
 	{
 		$this->tank_auth->logout();
-
 		$this->_show_message($this->lang->line('auth_message_logged_out'));
 	}
 
