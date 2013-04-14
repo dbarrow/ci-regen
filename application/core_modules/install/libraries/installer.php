@@ -106,7 +106,6 @@ class Installer
         $this->CI->dbforge->add_field("`default` tinyint(2) NOT NULL DEFAULT '0'");
         $this->CI->dbforge->add_key('id', true);
         $this->CI->dbforge->create_table('roles');
-
         $this->CI->db->query("INSERT INTO roles VALUES(1, 'admin', 0)");
         $this->CI->db->query("INSERT INTO roles VALUES(2, 'user', 1)");
 
@@ -126,8 +125,7 @@ class Installer
         $this->CI->dbforge->add_field("`last_ip` varchar(40) NOT NULL DEFAULT ''");
         $this->CI->dbforge->add_field("`last_login` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
         $this->CI->dbforge->add_field("`created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");
-        $this->CI->dbforge->add_field("`modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");        
-        
+        $this->CI->dbforge->add_field("`modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00'");                
         $this->CI->dbforge->add_key('id', true);
         $this->CI->dbforge->create_table('users');
 
@@ -157,15 +155,14 @@ class Installer
         $this->CI->dbforge->add_field("`country_id` int(11) DEFAULT NULL");
         $this->CI->dbforge->add_key('id', true);
         $this->CI->dbforge->create_table('user_profiles');
-
         $this->CI->load->library('auth/tank_auth');
         $this->CI->tank_auth->create_user($data['user_user'],$data['email'], $data['user_password'], 0);
 
         //Services 
         $this->CI->dbforge->add_field("`id` int(10) NOT NULL AUTO_INCREMENT");
         $this->CI->dbforge->add_field("`name` varchar(50) NOT NULL");
-        $this->CI->dbforge->add_field("`enabled` tinyint(1) DEFAULT '1'");
-              
+        $this->CI->dbforge->add_field("`enabled` tinyint(1) DEFAULT '1'");     
+        $this->CI->dbforge->add_field("`authorization` tinyint(1) DEFAULT '0'");          
         $this->CI->dbforge->add_key('id', true);
         $this->CI->dbforge->create_table('services');
         $this->CI->db->query("INSERT INTO services VALUES(1, 'users', 1)");

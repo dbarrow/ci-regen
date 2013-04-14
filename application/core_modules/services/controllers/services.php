@@ -22,9 +22,11 @@ class Services extends AuthController {
     {
         $this->load->model('services_model');
         $this->load->model($service_name . "/" . $service_name . "_model");  
+        
         $data['service_name'] = $service_name;    
         $data['fields_data'] = $this->db->field_data($service_name);
-        $data['service'] = $this->{$service_name . "_model"} ->get_all();   
+        $data['service'] = $this->{'services_model'} ->get_by('name', $service_name);           
+
         $data['main_content'] = $this->load->view("services/service", $data, true);
         $this->load->view($this->template, $data);
     }
@@ -103,6 +105,26 @@ class Services extends AuthController {
     public function remove_field($service_name, $field_name)
     {     
         $this->servicebuilder->delete_field($service_name, $field_name);
+        redirect("services/service/" . $service_name);
+    }
+    
+    public function toggle_auth($service_name)
+    {
+       $this->db->select('authorization');
+       $auth = $this->services_model->get_by('name', $service_name);
+        
+        if( $auth->authorization)
+        {
+            $auth->authorization=FALSE;
+        }
+        else
+        {
+            $auth->authorization=TRUE;          
+        }
+        $by['name'] = $service_name;
+        $update['authorization'] = $auth->authorization;
+
+        $this->services_model->update_by($by, $update);
         redirect("services/service/" . $service_name);
     }
 

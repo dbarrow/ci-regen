@@ -11,8 +11,13 @@ tr{
 	<div class="span2">
 		<h4><?= $service_name?></h4>
 	</div>
-	<div class="span2 pull-right">
-		Status: Active <button>Disable</button>
+	<div class="span3 pull-right" style="text-alight:right">
+		<?php 
+			if($service->authorization==TRUE)
+		      echo("Authorization <span class='label label-success'>Enabled </span> <a href='" . base_url('services/toggle_auth/' . $service_name) . "'>  [Disable]</a>");
+		  	else
+		  	   echo("Authorization <span class='label label-important'>Disabled </span> <a href='" . base_url('services/toggle_auth/' . $service_name) . "'>  [Enable]</a>");
+		?>		
 	</div>
 </div>
 

@@ -195,6 +195,7 @@ class Servicebuilder
         mkdir("application/modules/" . $service_name . "/models"      , 0777);
         mkdir("application/modules/" . $service_name . "/views"       , 0777);
         mkdir("application/modules/" . $service_name . "/controllers" , 0777);  
+        mkdir("application/modules/" . $service_name . "/config"      , 0777);  
 
         return true;
     }//end build_module
@@ -220,9 +221,12 @@ class Servicebuilder
         //set the template files for building model and controller and inject service name
         $controller = $this->CI->load->view('templates/default_controller.php', $data, true);
         $model      = $this->CI->load->view('templates/default_model.php', $data, true);  
+        $config     = $this->CI->load->view('templates/default_config.php', $data, true); 
     
         write_file("application/modules/" . $service_name . "/controllers/" . $service_name . '.php'       , $controller);
         write_file("application/modules/" . $service_name . "/models/"      . $service_name . '_model.php' , $model); 
+        write_file("application/modules/" . $service_name . "/config/config.php", $config); 
+
 
         return true;
     }//end write_files

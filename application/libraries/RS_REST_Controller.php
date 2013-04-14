@@ -31,14 +31,35 @@ class RS_REST_Controller extends REST_Controller
 	{
 		parent::__construct();
 		$this->load->model($this->model, null, true);
-		$this->load->library('auth/tank_auth');
-		//headers for CORS(Cross-Origin-Resourse-Sharing)
+
+		//**********************************Headers for CORS(Cross-Origin-Resourse-Sharing)***********************
 		header('Access-Control-Allow-Origin: *');	
 		header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');	
-		header('Access-Control-Allow-Headers: Content-Type');
+		header('Access-Control-Allow-Headers: Content-Type, api');
+		//*********************************************End Headers************************************************
 
-		if (!$this->tank_auth->is_logged_in()) 								// logged in
-			$this->response(array('status' => false, 'error' => $this->model), 401); //No records found
+		//****************************************Authorization Check*********************************************
+		$this->load->model('services/services_model');
+		$this->db->select('authorization');
+		//get service name from $this->model
+		$service_name = explode( '_', $this->model);
+       	$auth = $this->services_model->get_by('name', $service_name[0]);
+
+		if($auth->authorization)
+		{
+			$this->load->library('api_auth/api_authorization');
+			$token = $_SERVER['HTTP_API'];
+
+			if (!$this->api_authorization->authorize_token($token)) 
+			{
+    			$this->response(array('status' => $token, 'error' => 'Not Authorized - Login in'), 401);  //Not authorized
+    		}	
+    		
+	    	$new_token = time();
+	    	$this->api_authorization->update_token($token, $new_token);	
+	    	header('API:' . $new_token);		
+    	}
+    	//****************************************End Authorization Check******************************************
 	}
 
 	//--------------------------------------------------------------------
