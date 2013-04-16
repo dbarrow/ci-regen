@@ -49,7 +49,7 @@ class RS_REST_Controller extends REST_Controller
 
 		if($auth->authorization)
 		{
-			if( $_SERVER['HTTP_OPTIONS'])
+			if( $_SERVER['HTTP_ORIGIN'])
 			{
 				$this->response($_SERVER);  //Not authorized
 			}
