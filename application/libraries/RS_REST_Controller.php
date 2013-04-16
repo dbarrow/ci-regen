@@ -35,7 +35,9 @@ class RS_REST_Controller extends REST_Controller
 		//**********************************Headers for CORS(Cross-Origin-Resourse-Sharing)***********************
 		header('Access-Control-Allow-Origin: *');	
 		header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');	
-		header('Access-Control-Allow-Headers: Content-Type, api');
+		header('Access-Control-Allow-Headers: Content-Type, API');
+		header('Access-Control-Expose-Headers: API');
+
 		//*********************************************End Headers************************************************
 
 		//****************************************Authorization Check*********************************************
