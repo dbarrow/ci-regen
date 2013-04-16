@@ -47,15 +47,13 @@ class RS_REST_Controller extends REST_Controller
 		$service_name = explode( '_', $this->model);
        	$auth = $this->services_model->get_by('name', $service_name[0]);
 
+       	if( $_SERVER['HTTP_REQUEST_METHOD'] == 'OPTIONS')
+		{
+			$this->response(200);  //Not authorized
+		}
+
 		if($auth->authorization)
 		{
-			
-			if( $_SERVER['HTTP_REQUEST_METHOD'] == 'OPTIONS')
-			{
-				$this->response(200);  //Not authorized
-			}
-			
-
 			$this->load->library('api_auth/api_authorization');
 			$token = $_SERVER['HTTP_API'];
 
