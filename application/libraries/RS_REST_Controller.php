@@ -49,17 +49,19 @@ class RS_REST_Controller extends REST_Controller
 
 		if($auth->authorization)
 		{
-			if( $_SERVER['HTTP_ORIGIN'])
+			
+			if( $_SERVER['HTTP_REQUEST_METHOD'] == 'OPTIONS')
 			{
-				$this->response($_SERVER);  //Not authorized
+				$this->response(200);  //Not authorized
 			}
+			
 
 			$this->load->library('api_auth/api_authorization');
 			$token = $_SERVER['HTTP_API'];
 
 			if (!$this->api_authorization->authorize_token($token)) 
 			{
-    			$this->response(array('status' => $_SERVER, 'error' => 'Not Authorized - Login in'), 401);  //Not authorized
+    			$this->response(array('status' => $token, 'error' => 'Not Authorized - Login in'), 401);  //Not authorized
     		}	
     		
 	    	$new_token = time();
@@ -70,10 +72,7 @@ class RS_REST_Controller extends REST_Controller
 	}
 
 	//--------------------------------------------------------------------
-	public function index_options()
-	{
-		$this->response("OPTINOS DETECTED");  //Not authorized
-	}
+
 	/**
 	*	Method: index_get()
 	*
