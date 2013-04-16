@@ -48,8 +48,9 @@ class Api_authorization
 	function update_token($token, $new_token)
 	{
 		$data['token'] = $token;
-		$new_data['token'] = $new_token;
+		$new_data['token'] = time();
 		$this->ci->api_auth_model->update_by($data, $new_data);
+		return $new_data['token'];
 	}
 
 }

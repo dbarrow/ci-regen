@@ -47,23 +47,23 @@ class RS_REST_Controller extends REST_Controller
 		$service_name = explode( '_', $this->model);
        	$auth = $this->services_model->get_by('name', $service_name[0]);
 
+       	//Options Preflight Check
        	if( $_SERVER['REQUEST_METHOD'] == 'OPTIONS')
 		{
-			$this->response(200);  //Not authorized
+			$this->response(200);  
 		}
 
 		if($auth->authorization)
 		{
 			$this->load->library('api_auth/api_authorization');
-			$token = $_SERVER['HTTP_API'];
+			$token = $_SERVER['HTTP_API'];  //store API Header 
 
-			if (!$this->api_authorization->authorize_token($token)) 
+			if (!$this->api_authorization->authorize_token($token))  
 			{
-    			$this->response(array('status' => $_SERVER, 'error' => 'Not Authorized - Login in'), 401);  //Not authorized
-    		}	
-    		
-	    	$new_token = time();
-	    	$this->api_authorization->update_token($token, $new_token);	
+    			$this->response(array('error' => 'Invalid Credentials'), 401);  //Not authorized
+    		}	    		
+	    	
+	    	$new_token = $this->api_authorization->update_token($token);	
 	    	header('API:' . $new_token);		
     	}
     	//****************************************End Authorization Check******************************************
