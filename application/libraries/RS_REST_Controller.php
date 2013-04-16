@@ -35,8 +35,8 @@ class RS_REST_Controller extends REST_Controller
 		//**********************************Headers for CORS(Cross-Origin-Resourse-Sharing)***********************
 		header('Access-Control-Allow-Origin: *');	
 		header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');	
-		header('Access-Control-Allow-Headers: Content-Type, API');
-		header('Access-Control-Expose-Headers: API');
+		header('Access-Control-Allow-Headers: Content-Type, API');  //allowed headers
+		header('Access-Control-Expose-Headers: API');  //expose custom headers cross domain
 
 		//*********************************************End Headers************************************************
 
@@ -49,6 +49,11 @@ class RS_REST_Controller extends REST_Controller
 
 		if($auth->authorization)
 		{
+			if( $_SERVER['HTTP_OPTIONS'])
+			{
+				$this->response(200);  //Not authorized
+			}
+
 			$this->load->library('api_auth/api_authorization');
 			$token = $_SERVER['HTTP_API'];
 
