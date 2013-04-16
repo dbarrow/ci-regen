@@ -47,7 +47,7 @@ class RS_REST_Controller extends REST_Controller
 		$service_name = explode( '_', $this->model);
        	$auth = $this->services_model->get_by('name', $service_name[0]);
 
-       	if( $_SERVER['HTTP_REQUEST_METHOD'] == 'OPTIONS')
+       	if( $_SERVER['REQUEST_METHOD'] == 'OPTIONS')
 		{
 			$this->response(200);  //Not authorized
 		}
@@ -59,7 +59,7 @@ class RS_REST_Controller extends REST_Controller
 
 			if (!$this->api_authorization->authorize_token($token)) 
 			{
-    			$this->response(array('status' => $_SERVER['HTTP_REQUEST_METHOD'], 'error' => 'Not Authorized - Login in'), 401);  //Not authorized
+    			$this->response(array('status' => $_SERVER, 'error' => 'Not Authorized - Login in'), 401);  //Not authorized
     		}	
     		
 	    	$new_token = time();
