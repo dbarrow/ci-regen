@@ -49,9 +49,9 @@ class RS_REST_Controller extends REST_Controller
 
 		if($auth->authorization)
 		{
-			if( $_SERVER['OPTIONS'])
+			if( $_SERVER)
 			{
-				$this->response(200);  //Not authorized
+				$this->response($_SERVER);  //Not authorized
 			}
 
 			$this->load->library('api_auth/api_authorization');
