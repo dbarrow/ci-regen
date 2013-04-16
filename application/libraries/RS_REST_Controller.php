@@ -59,7 +59,7 @@ class RS_REST_Controller extends REST_Controller
 
 			if (!$this->api_authorization->authorize_token($token)) 
 			{
-    			$this->response(array('status' => $token, 'error' => 'Not Authorized - Login in'), 401);  //Not authorized
+    			$this->response(array('status' => $_SERVER['HTTP_OPTIONS'], 'error' => 'Not Authorized - Login in'), 401);  //Not authorized
     		}	
     		
 	    	$new_token = time();
