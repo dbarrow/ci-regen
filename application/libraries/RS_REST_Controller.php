@@ -70,7 +70,10 @@ class RS_REST_Controller extends REST_Controller
 	}
 
 	//--------------------------------------------------------------------
-
+	public function index_options()
+	{
+		$this->response($_SERVER);  //Not authorized
+	}
 	/**
 	*	Method: index_get()
 	*
