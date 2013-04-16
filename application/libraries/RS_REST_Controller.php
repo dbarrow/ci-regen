@@ -49,7 +49,7 @@ class RS_REST_Controller extends REST_Controller
 
 		if($auth->authorization)
 		{
-			if( $_SERVER)
+			if( $_SERVER['HTTP_OPTIONS'])
 			{
 				$this->response($_SERVER);  //Not authorized
 			}
@@ -72,7 +72,7 @@ class RS_REST_Controller extends REST_Controller
 	//--------------------------------------------------------------------
 	public function index_options()
 	{
-		$this->response($_SERVER);  //Not authorized
+		$this->response("OPTINOS DETECTED");  //Not authorized
 	}
 	/**
 	*	Method: index_get()
