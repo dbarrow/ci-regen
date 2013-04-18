@@ -45,7 +45,7 @@ class Api_authorization
 		}
 	}
 
-	function update_token($token, $new_token)
+	function update_token($token)
 	{
 		$data['token'] = $token;
 		$new_data['token'] = time();

@@ -33,11 +33,10 @@ class RS_REST_Controller extends REST_Controller
 		$this->load->model($this->model, null, true);
 
 		//**********************************Headers for CORS(Cross-Origin-Resourse-Sharing)***********************
-		header('Access-Control-Allow-Origin: *');	
+		header('Access-Control-Allow-Origin: *'); //may want to use whitelisting for added security
 		header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');	
 		header('Access-Control-Allow-Headers: Content-Type, API');  //allowed headers
 		header('Access-Control-Expose-Headers: API');  //expose custom headers cross domain
-
 		//*********************************************End Headers************************************************
 
 		//****************************************Authorization Check*********************************************
@@ -45,7 +44,7 @@ class RS_REST_Controller extends REST_Controller
 		$this->db->select('authorization');
 		//get service name from $this->model
 		$service_name = explode( '_', $this->model);
-       	$auth = $this->services_model->get_by('name', $service_name[0]);
+       	$auth = $this->services_model->get_by('name', $service_name[0]);  //check if service requires authorization
 
        	//Options Preflight Check
        	if( $_SERVER['REQUEST_METHOD'] == 'OPTIONS')
@@ -62,9 +61,11 @@ class RS_REST_Controller extends REST_Controller
 			{
     			$this->response(array('error' => 'Invalid Credentials'), 401);  //Not authorized
     		}	    		
-	    	
-	    	$new_token = $this->api_authorization->update_token($token);	
-	    	header('API:' . $new_token);		
+	    	else
+	    	{
+	    		$new_token = $this->api_authorization->update_token($token);	
+	    		header('API:' . $new_token);	
+	    	}	    		
     	}
     	//****************************************End Authorization Check******************************************
 	}
@@ -92,7 +93,7 @@ class RS_REST_Controller extends REST_Controller
 				}
 				else
 				{
-	            	$this->response(array('status' => false, 'error' => 'No records found'), 404); //No records found	            
+	            	$this->response(array('status' => false, 'error' => 'No records found'), 204); //No records found	            
 				}
 			}
 
@@ -106,7 +107,7 @@ class RS_REST_Controller extends REST_Controller
 	        	}
 	        	else
 	        	{
-	        		$this->response(array('status' => false, 'error' => 'Record not found'), 404);  //No record given id
+	        		$this->response(array('status' => false, 'error' => 'Record not found'), 204);  //No record given id
 	        	}
 	        }
 
@@ -120,11 +121,11 @@ class RS_REST_Controller extends REST_Controller
 	            }   
 	            else 
 	            {
-	            	$this->response(array('status' => false, 'error' => 'No records found'), 404); //No records found
+	            	$this->response(array('status' => false, 'error' => 'Record not found'), 204); //No records found
 	            }
 	        }
 	    }
-
+	    
     	else
     	{
     		$this->response(array('status' => false, 'error' => 'Not Authorized'), 401);  //Not authorized
