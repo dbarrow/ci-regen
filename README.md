@@ -13,7 +13,7 @@ I have decided to keep everything as simple as possible.  I am using several ope
 ##Credits
 
 - [Codeigniter](http://ellislab.com/codeigniter)
-- Jamie Rubelow - [MY_Model](https://github.com/jamierumbelow/codeigniter-base-model). In my opinion, the best off the shelf my_model
+- Jamie Rumbelow - [MY_Model](https://github.com/jamierumbelow/codeigniter-base-model). In my opinion, the best off the shelf my_model
 - Phil Sturgeon - [CI Rest Server](https://github.com/philsturgeon/codeigniter-restserver).  Great implementation.  One of those libriaries    where I am not afraid of things not working.
 - mtsandeep - [Tank Auth with Roles](https://bitbucket.org/mtsandeep/tank-auth-with-roles/wiki/Home).  Tank auth seems to work out of the box pretty well.  I like the fact mtsands added role support.  Although roles are not used in this project, they may come in handy when implementing applications and authentification.  
 - wiredesignz - [HMVC](https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc).  The standard codeigniter HMVC package
