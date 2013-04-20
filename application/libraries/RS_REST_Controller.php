@@ -8,7 +8,7 @@
  *
  * @package   Rest Suite
  * @author    Darryl Barrow
- * @copyright Copyright (c) 2013, Traversepoint
+ * @copyright Copyright (c) 2013
  * @license   MIT
  * @link      http://www.traversepoint.com
  * @since     Version 1.0
@@ -63,8 +63,7 @@ class RS_REST_Controller extends REST_Controller
     		}	    		
 	    	else
 	    	{
-	    		$new_token = $this->api_authorization->update_token($token);	
-	    		header('API:' . $new_token);	
+	    		$this->api_authorization->update_token($token);		    			
 	    	}	    		
     	}
     	//****************************************End Authorization Check******************************************
@@ -222,7 +221,7 @@ class RS_REST_Controller extends REST_Controller
 		  		$this->response(array('status' => false, 'error' => 'Record does not exist'), 400); 
 		  	}
 
-		  	if($put)  //url contains query string. eg - api/books/?title=moby dick&hardback=true
+		  	if($put)  //url contains query string. eg - api/books/?title=mobydick&hardback=true
 		  	{
 		  		if($this->{$this->model}->update($id,  $put))
 		  		{

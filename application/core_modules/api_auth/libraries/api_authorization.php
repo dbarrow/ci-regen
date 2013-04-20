@@ -22,13 +22,15 @@ class Api_authorization
 	{		
 		$data['token'] = time();
 		$this->ci->api_auth_model->insert($data);
-		return $data['token'];
+		header('API:' . $data['token'] );  //set api token in response header
+		return true;
 	}
 
 	function logout()
 	{
 		$data['token'] =  $_SERVER['HTTP_API'];
 		$this->ci->api_auth_model->delete_by($data);
+		header('API:' . "null");
 		return null;
 	}
 
@@ -50,9 +52,8 @@ class Api_authorization
 		$data['token'] = $token;
 		$new_data['token'] = time();
 		$this->ci->api_auth_model->update_by($data, $new_data);
-		return $new_data['token'];
+		header('API:' . $new_data['token']);
 	}
-
 }
 
 

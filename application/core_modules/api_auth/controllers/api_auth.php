@@ -29,8 +29,7 @@ class api_auth extends RS_REST_Controller {
 			$result = $this->tank_auth->login($post['email'], $post['password'], true, true, true);	 //use tank_auth to validate user
 			if($result)  //if tank_auth validates
 			{
-				$token = $this->api_authorization->login($post['email']);  //login in to api
-				header('API:' . $token );  //set api token in response header
+				$token = $this->api_authorization->login();  //login in to api
 				$this->response(200);  //success
 			}
 			else
@@ -48,9 +47,8 @@ class api_auth extends RS_REST_Controller {
 	public function logout_get()
 	{
 		$this->tank_auth->logout();
-		$token = $this->api_authorization->logout();
-		header('API:' . null);
-		$this->response(array('status' => true, 'api' => $token), 200); //success
+		$this->api_authorization->logout();		
+		$this->response(array('status' => true), 200); //success
 	}
 } 
 
