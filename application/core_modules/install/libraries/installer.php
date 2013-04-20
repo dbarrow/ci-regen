@@ -165,8 +165,8 @@ class Installer
         $this->CI->dbforge->add_field("`authorization` tinyint(1) DEFAULT '0'");          
         $this->CI->dbforge->add_key('id', true);
         $this->CI->dbforge->create_table('services');
-        $this->CI->db->query("INSERT INTO services VALUES(1, 'users', 1)");
-        $this->CI->db->query("INSERT INTO services VALUES(2, 'user_profiles', 1)");
+        $this->CI->db->query("INSERT INTO services VALUES(1, 'users', 1, 1)");
+        $this->CI->db->query("INSERT INTO services VALUES(2, 'user_profiles', 1, 1)");
 
         return true;
     }//end install_tables
