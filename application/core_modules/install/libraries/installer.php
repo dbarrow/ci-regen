@@ -168,6 +168,12 @@ class Installer
         $this->CI->db->query("INSERT INTO services VALUES(1, 'users', 1, 1)");
         $this->CI->db->query("INSERT INTO services VALUES(2, 'user_profiles', 1, 1)");
 
+        //Api Authorization
+        $this->CI->dbforge->add_field("`id` int(10) NOT NULL AUTO_INCREMENT");
+        $this->CI->dbforge->add_field("`token` varchar(128) NOT NULL");
+        $this->CI->dbforge->add_key('id', true);
+        $this->CI->dbforge->create_table('services');
+
         return true;
     }//end install_tables
 
