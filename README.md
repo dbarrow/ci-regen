@@ -1,188 +1,151 @@
-#Re:Gen
+# angular-seed — the seed for AngularJS apps
 
-Codeigniter Based Web Resource Generator
-##Overview
+This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
+You can use it to quickly bootstrap your angular webapp projects and dev environment for these
+projects.
 
-RE:GEN enables developers to create web resources(RESTful web services) quickly and easily. 
+The seed contains AngularJS libraries, test libraries and a bunch of scripts all preconfigured for
+instant web development gratification. Just clone the repo (or download the zip/tarball), start up
+our (or yours) webserver and you are ready to develop and test your application.
 
-While this system automates a lot, Codeigniter knowledge is a benefit.  Basic CRUD routes are quickly generated, but any custom resource can be added to the service’s controller.
+The seed app doesn't do much, just shows how to wire two controllers and views together. You can
+check it out by opening app/index.html in your browser (might not work file `file://` scheme in
+certain browsers, see note below).
 
-The project was started when I got into client side applications.  When I began using backbone.js and saw the power of web resources, the idea came to mind.  Currently, I am using angular.js.  [Here](http://www.espeo.pl/2012/02/26/authentication-in-angularjs-application) is an article that has sparked my interest in authentication.
-
-I have decided to keep everything as simple as possible.  I am using several open source projects in this project.  I have implemented some of these as modules, but have not added another layer of abstraction.  There is no template engine.  
-##Credits
-
-- [Codeigniter](http://ellislab.com/codeigniter)
-- Jamie Rumbelow - [MY_Model](https://github.com/jamierumbelow/codeigniter-base-model). In my opinion, the best off the shelf my_model
-- Phil Sturgeon - [CI Rest Server](https://github.com/philsturgeon/codeigniter-restserver).  Great implementation.  One of those libriaries    where I am not afraid of things not working.
-- mtsandeep - [Tank Auth with Roles](https://bitbucket.org/mtsandeep/tank-auth-with-roles/wiki/Home).  Tank auth seems to work out of the box pretty well.  I like the fact mtsands added role support.  Although roles are not used in this project, they may come in handy when implementing applications and authentification.  
-- wiredesignz - [HMVC](https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc).  The standard codeigniter HMVC package
-- Twitter Bootstrap - [CSS Framework](http://twitter.github.com/bootstrap/).  Ok, what did you expect.
-
-
-##Installation
-
-Installation of RE:GEN is much like a base codeigniter install.
-
-Download source.
-Save to your public html directory. 
-<pre>
-Example:  wamp/www, xampp/htdocs, etc...
-</pre>
-Open the htaccess file in the root directory.  Edit the RewriteBase / at around line 120. If the source files have been placed in the root of the public html directory, leave the line as is.  If the files have been placed in a subdirectory of the public html directory, add your subdirectory.
-<pre>
-Example:  RewriteBase /ci-regen/
-</pre>
-Thanks to Lonnie Ezell’s project, [Bonfire](https://github.com/ci-bonfire/Bonfire), his htaccess file somehow allows us to not change the base_url in the application/config/config.php.  Do not alter the base_url unless you are having issues.  If anyone knows why the htaccess file works like this, let me know.
-Create an empty MySQL Database
-
-After installation, simply start your server and navigate to the application.  From here an install screen will appear.  
-
-Enter you database credentials and initial user information.  
-
-Click Install.  Hopefully there were no errors.  
-
-####Installation Recap
-
-1.  Download
-2.  Save files to your localhost like a normal Codeigniter installation.
-3.  Open htaccess file at root of project folder.  Set the URL to the folder your project is in.
-4.  Open phpMyAdmin or whatever and create an empty database.
-5.  Go to localhost/projectfolder
-6.  install screen appears
+_Note: While angular is client-side-only technology and it's possible to create angular webapps that
+don't require a backend server at all, we recommend hosting the project files using a local
+webserver during development to avoid issues with security restrictions (sandbox) in browsers. The
+sandbox implementation varies between browsers, but quite often prevents things like cookies, xhr,
+etc to function properly when an html page is opened via `file://` scheme instead of `http://`._
 
 
-##What does it do
+## How to use angular-seed
 
-After installation, a simple GUI allows one to create new web services.  
-###Existing Services
-
-Out of the box, two REST services are available, users and user_profiles.
-
-To consume the services, navigate to the resource in a browser.  
-<pre>
-Example:  localhost/ci-regen/api/users
-</pre>
-
-Here you will see json output for all users.  Add an ‘id’ to the url and get that particular user.
-<pre>
-Example:  localhost/ci-regen/api/users/1
-</pre>
-###Consuming Services
-
-There are several HTTP tools available.  I like using Postman for Chrome.  Install [Postman](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?utm_source=chrome-ntp-icon) from Chrome Web Store.
-
-Run Postman.  Enter RESTful route. Available routes are as follows.
-####Get
-<pre>
-- localhost/ci-regen/api/users
-- localhost/ci-regen/api/users/1
-- localhost/ci-regen/api/users/?id=1
-- localhost/ci-regen/api/users/with_profiles
-- localhost/ci-regen/api/users/with_profiles/1
-- localhost/ci-regen/api/users/with_profiles/?id=1
-</pre>
-####Post
-<pre>
-- localhost/ci-regen/api/users/
-</pre>
-Click x-www-form-urlencoded. 
-Add fields and values to be inserted. See users db table for available fields.
-####Put
-<pre>
-- localhost/ci-regen/api/users/1
-- localhost/ci-regen/api/users/?id=1 //where id = 1
-- localhost/ci-regen/api/users/?[field]=[value]&[field2]=[value2] where field = value and where field2 = value2
-</pre>
-Add the fields and values to be updated to the URL Params in Postman.
-Add the fields and values to be updated to the x-www-form-urlencoded keys and values.
-
-####Delete
-<pre>
-- localhost/ci-regen/api/users/1
-- localhost/ci-regen/api/users/?id=1  //where id = 1
-- localhost/ci-regen/api/users/?[field]=[value]&[field2]=[value2] //where field=value and where field2 = value2
-</pre>
-Add the conditionals to be deleted to the URL Params in Postman
-
-###Creating New Services 
-
-From the services index page, click the + button.
-
-Set service name.  Application conventions use this name for the controller name, the model name, and the database name.  The service name is also added to the services table.  
-
-Example:
-
-<pre>
--service name: books
--Controller: books.php
--Model: books_model.php
--database table name: books
--service database record name field: books
-</pre>
-
-Add primary key.  
-
-Add as many fields as you would like.	
-
-Currently, this page has no validation and additional fields are added via jquery.  If the page is refreshed, navigated back to or there is a service builder error, the fields will have to be entered again.  This is something that needs to be fixed.
+Clone the angular-seed repository and start hacking...
 
 
+### Running the app during development
 
-##Routes
+You can pick one of these options:
 
-Two custom routes have been created in config/routes.php.
+* serve this repository with your webserver
+* install node.js and run `scripts/web-server.js`
 
-<pre>
-$route['api/' . '(:any)/(:num)']	= "$1/index/$2";
-$route['api/' . '(:any)']	= "$1";
-</pre>
+Then navigate your browser to `http://localhost:<port>/app/index.html` to see the app running in
+your browser.
 
-By default, the functions available for the generated controllers are
-<pre>
-- index_get()
-- index_post()
-- index_put()
-- index_delete()
-</pre>
-Phil’s Rest Controller requires every method to have the HTTP verb appended to the function name.  However, when calling the function, the HTTP verb is not included in the call.
 
-Example:
+### Running the app in production
 
-<pre>
- api/books/index will route to the appropiate method relying on the HTTP headers.
-</pre>
-The first custom route enables us to not call the index method in the url.
+This really depends on how complex is your app and the overall infrastructure of your system, but
+the general rule is that all you need in production are all the files under the `app/` directory.
+Everything else should be omitted.
 
-Example:
+Angular apps are really just a bunch of static html, css and js files that just need to be hosted
+somewhere, where they can be accessed by browsers.
 
-<pre>
-get
-Without Custom route:  www.domain.com/api/books
-With custom route:       www.domain.com/api/books
+If your Angular app is talking to the backend server via xhr or other means, you need to figure
+out what is the best way to host the static files to comply with the same origin policy if
+applicable. Usually this is done by hosting the files by the backend server or through
+reverse-proxying the backend server(s) and a webserver(s).
 
-post
-Without Custom route:  www.domain.com/api/books/index
-With custom route:       www.domain.com/api/books
 
-put
-Without Custom route:  www.domain.com/api/index/books/index/[:id]
-With custom route:        www.domain.com/api/books/[:id]
+### Running unit tests
 
-delete
-Without Custom route:  www.domain.com/api/books/index/[:id]
-With custom route:  www.domain.com/api/books/[:id]
-</pre>
-##Version Control
+We recommend using [jasmine](http://pivotal.github.com/jasmine/) and
+[Testacular](http://vojtajina.github.com/testacular/) for your unit tests/specs, but you are free
+to use whatever works for you.
 
-In the first and second route, ‘api/’ is prepended to the routes.  Simply change these routes in subsequent versions.  
+Requires [node.js](http://nodejs.org/), Testacular (`sudo npm install -g testacular`) and a local
+or remote browser.
 
-Example:
+* start `scripts/test.sh` (on windows: `scripts\test.bat`)
+  * a browser will start and connect to the Testacular server (Chrome is default browser, others can be captured by loading the same url as the one in Chrome or by changing the `config/testacular.conf.js` file)
+* to run or re-run tests just change any of your source or test javascript files
 
-<pre>
-$route['api2/' . '(:any)/(:num)']	= "$1/index/$2";
-$route['api2/' . '(:any)']	= "$1";
-</pre>
 
-I know, simple but effective.
+### End to end testing
 
+Angular ships with a baked-in end-to-end test runner that understands angular, your app and allows
+you to write your tests with jasmine-like BDD syntax.
+
+Requires a webserver, node.js + `./scripts/web-server.js` or your backend server that hosts the angular static files.
+
+Check out the
+[end-to-end runner's documentation](http://docs.angularjs.org/guide/dev_guide.e2e-testing) for more
+info.
+
+* create your end-to-end tests in `test/e2e/scenarios.js`
+* serve your project directory with your http/backend server or node.js + `scripts/web-server.js`
+* to run do one of:
+  * open `http://localhost:port/test/e2e/runner.html` in your browser
+  * run the tests from console with [Testacular](vojtajina.github.com/testacular) via
+    `scripts/e2e-test.sh` or `script/e2e-test.bat`
+
+### Continuous Integration
+
+CloudBees have provided a CI/deployment setup:
+
+<a href="https://grandcentral.cloudbees.com/?CB_clickstart=https://raw.github.com/CloudBees-community/angular-js-clickstart/master/clickstart.json"><img src="https://d3ko533tu1ozfq.cloudfront.net/clickstart/deployInstantly.png"/></a>
+
+If you run this, you will get a cloned version of this repo to start working on in a private git repo, 
+along with a CI service (in Jenkins) hosted that will run unit and end to end tests in both Firefox and Chrome.
+
+### Receiving updates from upstream
+
+When we upgrade angular-seed's repo with newer angular or testing library code, you can just
+fetch the changes and merge them into your project with git.
+
+
+## Directory Layout
+
+    app/                --> all of the files to be used in production
+      css/              --> css files
+        app.css         --> default stylesheet
+      img/              --> image files
+      index.html        --> app layout file (the main html template file of the app)
+      index-async.html  --> just like index.html, but loads js files asynchronously
+      js/               --> javascript files
+        app.js          --> application
+        controllers.js  --> application controllers
+        directives.js   --> application directives
+        filters.js      --> custom angular filters
+        services.js     --> custom angular services
+      lib/              --> angular and 3rd party javascript libraries
+        angular/
+          angular.js        --> the latest angular js
+          angular.min.js    --> the latest minified angular js
+          angular-*.js      --> angular add-on modules
+          version.txt       --> version number
+      partials/             --> angular view partials (partial html templates)
+        partial1.html
+        partial2.html
+
+    config/testacular.conf.js        --> config file for running unit tests with Testacular
+    config/testacular-e2e.conf.js    --> config file for running e2e tests with Testacular
+
+    scripts/            --> handy shell/js/ruby scripts
+      e2e-test.sh       --> runs end-to-end tests with Testacular (*nix)
+      e2e-test.bat      --> runs end-to-end tests with Testacular (windows)
+      test.bat          --> autotests unit tests with Testacular (windows)
+      test.sh           --> autotests unit tests with Testacular (*nix)
+      web-server.js     --> simple development webserver based on node.js
+
+    test/               --> test source files and libraries
+      e2e/              -->
+        runner.html     --> end-to-end test runner (open in your browser to run)
+        scenarios.js    --> end-to-end specs
+      lib/
+        angular/                --> angular testing libraries
+          angular-mocks.js      --> mocks that replace certain angular services in tests
+          angular-scenario.js   --> angular's scenario (end-to-end) test runner library
+          version.txt           --> version file
+      unit/                     --> unit level specs/tests
+        controllersSpec.js      --> specs for controllers
+        directivessSpec.js      --> specs for directives
+        filtersSpec.js          --> specs for filters
+        servicesSpec.js         --> specs for services
+
+## Contact
+
+For more information on AngularJS please check out http://angularjs.org/

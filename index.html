@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My AngularJS App</title>
+   <link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/bootstrap/css/bootstrap-responsive.min.css"/>
+  <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+  
+<div class="container">
+  
+  <div ng-include src="'partials/nav/nav.html'"></div>   
+
+  <div ng-view></div>
+</div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+  -->
+  <script src="lib/underscore.js"></script>
+  <script src="//code.angularjs.org/1.1.4/angular.min.js"></script>
+  <script src="lib/angular/angular-resource.min.js" type="text/javascript"></script>
+
+  <script src="project.js"></script>
+
+
+  
+
+  
+ 
+<!--TODO use ng-include to include modules.  include html file with js includes-->
+</body>
+</html>
