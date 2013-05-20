@@ -152,7 +152,7 @@ class NG_Builder
     {
         $loginservice    = $this->CI->load->view('templates/default_loginservice.php', $data, true);  
 
-         write_file("../app/js/services/loginservice" , $loginservice);
+         write_file("../app/js/services/loginservice.js" , $loginservice);
     }
 
     
