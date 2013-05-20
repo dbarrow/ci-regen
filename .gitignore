@@ -6,3 +6,25 @@ build.xml
 .project
 .settings
 .idea/*
+
+#Ignore OS Related/Generic
+Thumbs.db
+Desktop.ini
+
+# Ignore Custom config files
+regen/application/config/development/*
+regen/application/config/testing/*
+/regenapplication/config/production/*
+
+# but leave the config folders there
+!regen/application/config/development/index.html
+!regen/application/config/testing/index.html
+!regen/application/config/production/index.html
+
+#Ignore installed.txt
+regen/application/core_modules/install/installed.txt
+
+# Ignore all custom modules.
+regen/application/modules/*
+
+!regen/application/modules/index.html
