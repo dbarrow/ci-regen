@@ -14,7 +14,7 @@ Desktop.ini
 # Ignore Custom config files
 regen/application/config/development/*
 regen/application/config/testing/*
-/regenapplication/config/production/*
+regen/application/config/production/*
 
 # but leave the config folders there
 !regen/application/config/development/index.html

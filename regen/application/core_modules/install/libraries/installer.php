@@ -172,7 +172,7 @@ class Installer
         $this->CI->dbforge->add_field("`id` int(10) NOT NULL AUTO_INCREMENT");
         $this->CI->dbforge->add_field("`token` varchar(128) NOT NULL");
         $this->CI->dbforge->add_key('id', true);
-        $this->CI->dbforge->create_table('services');
+        $this->CI->dbforge->create_table('api_auth');
 
         return true;
     }//end install_tables
