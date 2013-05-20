@@ -88,10 +88,10 @@ class NG_Builder
     private function build_module($module_name)
     {                  
         //          Location            Service Name   New Directory    Perm.
-        mkdir("../frontend/modules/" . $module_name                  , 0777);
-        mkdir("../frontend/modules/" . $module_name . "/services"    , 0777);
-        mkdir("../frontend/modules/" . $module_name . "/views"       , 0777);
-        mkdir("../frontend/modules/" . $module_name . "/controllers" , 0777);     
+        mkdir("../app/modules/" . $module_name                  , 0777);
+        mkdir("../app/modules/" . $module_name . "/services"    , 0777);
+        mkdir("../app/modules/" . $module_name . "/views"       , 0777);
+        mkdir("../app/modules/" . $module_name . "/controllers" , 0777);     
         return true;
     }//end build_module
 
@@ -130,13 +130,13 @@ class NG_Builder
         $single_view  = $this->CI->load->view('templates/default_single_view.php', $data, true); 
         $new_view = $this->CI->load->view('templates/default_new_view.php', $data, true); 
     
-        write_file("../frontend/modules/" . $module . "/controllers/" . $module  . 'ListController.js' , $controller);
-        write_file("../frontend/modules/" . $module . "/controllers/" . $module  . 'ViewController.js' , $single_controller);
-        write_file("../frontend/modules/" . $module . "/services/"    . $module  . 'Service.js'        , $service); 
-        write_file("../frontend/modules/" . $module . "/config.js"                                     , $config); 
-        write_file("../frontend/modules/" . $module . "/views/"       .  $data['lc_singular'] . ".html"   , $single_view); 
-        write_file("../frontend/modules/" . $module . "/views/"       .  $data['lc_plural'] . ".html"   , $list_view); 
-        write_file("../frontend/modules/" . $module . "/views/new-"       .  $data['lc_singular'] . ".html"   , $new_view); 
+        write_file("../app/modules/" . $module . "/controllers/" . $module  . 'ListController.js' , $controller);
+        write_file("../app/modules/" . $module . "/controllers/" . $module  . 'ViewController.js' , $single_controller);
+        write_file("../app/modules/" . $module . "/services/"    . $module  . 'Service.js'        , $service); 
+        write_file("../app/modules/" . $module . "/config.js"                                     , $config); 
+        write_file("../app/modules/" . $module . "/views/"       .  $data['lc_singular'] . ".html"   , $single_view); 
+        write_file("../app/modules/" . $module . "/views/"       .  $data['lc_plural'] . ".html"   , $list_view); 
+        write_file("../app/modules/" . $module . "/views/new-"       .  $data['lc_singular'] . ".html"   , $new_view); 
 
 
         return true;
