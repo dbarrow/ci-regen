@@ -42,7 +42,13 @@ class NG_Builder
     }//end __construct
 
     //--------------------------------------------------------------------
-
+    public function initialize_app()
+    {
+         if (!$this->write_initial_files()) {
+            return false;
+        }
+        return true;
+    }
     /**
      * Build Service
      *
@@ -141,6 +147,13 @@ class NG_Builder
 
         return true;
     }//end write_files
+
+    private function write_initial_files()
+    {
+        $loginservice    = $this->CI->load->view('templates/default_loginservice.php', $data, true);  
+
+         write_file("../app/js/services/loginservice" , $loginservice);
+    }
 
     
 
