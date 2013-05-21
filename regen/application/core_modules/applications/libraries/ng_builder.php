@@ -44,10 +44,9 @@ class NG_Builder
     //--------------------------------------------------------------------
     public function initialize_app()
     {
-         if (!$this->write_initial_files()) {
-            return false;
-        }
-        return true;
+        $data = null;
+        $loginservice    = $this->CI->load->view('templates/default_loginservice.php', $data, true);  
+        write_file("../app/js/services/loginservice.js" , $loginservice);
     }
     /**
      * Build Service
