@@ -24,7 +24,7 @@ class Applications extends AuthController {
         $out = array();
         $this->ng_builder->build($module);
         exec('ls', $out);
-        echo $out;
+        var_dump($out);
     }   
 
   
