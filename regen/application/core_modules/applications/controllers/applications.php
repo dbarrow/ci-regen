@@ -22,7 +22,8 @@ class Applications extends AuthController {
     public function build_ng_module($module)
     {     
         $this->ng_builder->build($module);
-        echo base_url();
+        exec('ls',$out);
+        echo out();
     }   
 
   
