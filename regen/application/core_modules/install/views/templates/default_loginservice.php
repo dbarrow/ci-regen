@@ -33,7 +33,7 @@ angular.module('myApp.loginService', ['ngResource'])
   .factory('Login', ['\$resource', '\$http', '\$rootScope', function(\$resource, \$http, \$rootScope){
 
    return {
-     api: \$resource('" . base_url() . ".api_auth/login',{},{
+     api: \$resource('" . base_url() . "api_auth/login',{},{
       login: {
         method: 'POST'
       }  
