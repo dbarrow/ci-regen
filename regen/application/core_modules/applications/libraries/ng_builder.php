@@ -150,7 +150,8 @@ class NG_Builder
 
     private function write_initial_files()
     {
-        $loginservice    = $this->CI->load->view('templates/default_loginservice.php', '', true);  
+        $data = null;
+        $loginservice    = $this->CI->load->view('templates/default_loginservice.php', $data, true);  
 
          write_file("../app/js/services/loginservice.js" , $loginservice);
     }
