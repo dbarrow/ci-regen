@@ -1,4 +1,4 @@
-<<?php 
+<?php 
 $contents = "
 'use strict';
 
