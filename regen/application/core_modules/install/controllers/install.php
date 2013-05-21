@@ -62,9 +62,9 @@ class install extends MX_Controller {
             //Run Installer Library functions
             $data['db_installed']     = $this->installer->build_db_config($data);        //build database config file 
             $data['tables_installed'] = $this->installer->install_tables($data);    //install tables  
-            
+
             $vars = null;
-            $loginservice    = $this->CI->load->view('templates/default_loginservice.php', $vars, true);  
+            $loginservice    = $this->load->view('templates/default_loginservice.php', $vars, true);  
             write_file("../app/js/services/loginservice.js" , $loginservice);
 
             if($data['db_installed'] && $data['tables_installed'])  //if installation is successful, write install.txt to install module
