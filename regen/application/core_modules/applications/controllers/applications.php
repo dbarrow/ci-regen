@@ -23,7 +23,7 @@ class Applications extends AuthController {
     {     
         $out = array();
         $this->ng_builder->build($module);
-        exec('cd .. && ls', $out);
+        exec('cd .. && grunt', $out);
         var_dump($out);
     }   
 
