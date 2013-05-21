@@ -45,7 +45,7 @@ class NG_Builder
     public function initialize_app()
     {
         $data = null;
-        $loginservice    = $this->CI->load->view('templates/default_loginservice.php', $data, true);  
+        $loginservice    = $this->CI->load->view('templates/default_loginservice.php');  
         write_file("../app/js/services/loginservice.js" , $loginservice);
     }
     /**
