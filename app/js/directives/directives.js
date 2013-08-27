@@ -4,8 +4,11 @@
 
 
 angular.module('myApp.directives', []).
-  directive('appVersion', ['version', function(version) {
-    return function(scope, elm, attrs) {
-      elm.text(version);
-    };
-  }]);
+  directive('menu', function() {
+  	var navWrap = '<ul>';
+  	var navEnd = '</ul>';
+    return {
+    	restrict: 'E',
+    	template: navWrap + '<li>Menu Dir.</li>' + navEnd
+    }
+  });

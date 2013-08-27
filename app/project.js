@@ -160,11 +160,14 @@ LoginController.$inject = ['$rootScope','$location','$scope','authService','Logi
 
 
 angular.module('myApp.directives', []).
-  directive('appVersion', ['version', function(version) {
-    return function(scope, elm, attrs) {
-      elm.text(version);
-    };
-  }]);
+  directive('menu', function() {
+  	var navWrap = '<ul>';
+  	var navEnd = '</ul>';
+    return {
+    	restrict: 'E',
+    	template: navWrap + '<li>Menu Dir.</li>' + navEnd
+    }
+  });
 ;'use strict';
 
 /* Filters */
@@ -282,23 +285,24 @@ angular.module('myApp.filters', []).
       }
     };
   }]);
-})();;'use strict';
+})();;
+'use strict';
 
 angular.module('myApp.loginService', ['ngResource'])
 
   .config(['$httpProvider', function($httpProvider){      
    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-   delete $httpProvider.defaults.headers.common["X-Requested-With"];
+   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
    var interceptor = ['$rootScope', '$q', function($rootScope, $q) {
     function success(response) {
-      if(response.headers('API') || response.headers('API')=="null"){
-        window.localStorage.setItem("apikey", response.headers('API'));
+      if(response.headers('API') || response.headers('API')=='null'){
+        window.localStorage.setItem('apikey', response.headers('API'));
         console.log(response.headers('API'));
       }
 
 
-      $httpProvider.defaults.headers.common["API"] = window.localStorage.getItem("apikey");
+      $httpProvider.defaults.headers.common['API'] = window.localStorage.getItem('apikey');
       return response;
     }
 
@@ -315,16 +319,17 @@ angular.module('myApp.loginService', ['ngResource'])
   .factory('Login', ['$resource', '$http', '$rootScope', function($resource, $http, $rootScope){
 
    return {
-     api: $resource('http://www.traversepoint.com/ci-regen/api_auth/login',{},{
+     api: $resource('http://localhost/ci-regen/regen/api_auth/login',{},{
       login: {
         method: 'POST'
       }  
     }),
-     logout: $resource('http://www.traversepoint.com/ci-regen/api_auth/logout',{},{})
+     logout: $resource('http://localhost/ci-regen/regen/api_auth/logout',{},{})
 
-   }		
+   }    
  }]);
   
+
 
 ;
 myApp.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
@@ -436,7 +441,7 @@ CarViewController.$inject = ['$location','$scope','$routeParams','Cars'];
 'use strict';
 myApp.factory('Cars', ['$resource', function($resource){
   return {
-    api: $resource('http://www.traversepoint.com/ci-regen/regen/api/cars/:id',{},{
+    api: $resource('http://localhost/ci-regen/regen/api/cars/:id',{},{
       update: {
         method: 'PUT'
       }                   
@@ -553,7 +558,124 @@ ProjectViewController.$inject = ['$location','$scope','$routeParams','Projects']
 'use strict';
 myApp.factory('Projects', ['$resource', function($resource){
   return {
-    api: $resource('http://www.traversepoint.com/ci-regen/regen/api/projects/:id',{},{
+    api: $resource('http://localhost/ci-regen/regen/api/projects/:id',{},{
+      update: {
+        method: 'PUT'
+      }                   
+    })
+  }
+}])
+;
+myApp.config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+
+    $routeProvider.when('/users', {templateUrl: 'app/modules/users/views/users.html', controller: UserListController});
+    $routeProvider.when('/user/create', {templateUrl: 'app/modules/users/views/new-user.html' ,controller: UserListController});
+    $routeProvider.when('/user/:id', {templateUrl: 'app/modules/users/views/user.html' ,controller: UserViewController});
+    $routeProvider.when('/login', {templateUrl: 'app/partials/login.html', controller: LoginController});
+
+    $routeProvider.otherwise({redirectTo: 'users'});
+  }]);
+;
+function UserListController($rootScope, $location, $scope, $filter, Users, authService)
+{	
+  $scope = new BaseListController($scope, $filter, $location);
+
+  $scope.$on('event:auth-loginRequired', function() {
+    $location.path('/login');
+    console.log('login required');
+  });
+
+  //table settings
+  $scope.sortingOrder = 'id';
+  $scope.reverse = true;
+  $scope.itemsPerPage = 10; 
+
+  // get all Users and run baselistcontroller function search()
+  $scope.items = Users.api.query(
+    function(success){
+      $scope.search();              	    	
+    },
+    function(error){
+      alert('error');
+  });	
+
+  $scope.view = function(user){
+    $location.path('/user/' + user.id);
+  }
+
+  $scope.getAll = function(){
+    return $scope.items = Users.api.query();
+  };
+
+  $scope.create = function(set){
+    Users.api.save(set, 
+      function(success){
+        $scope.items.push(success);		
+        $location.path('/users');
+      },
+      function(error){
+        alert('error');
+      }
+    );
+  };
+
+  $scope.put = function(idx)
+  {			
+    var user = $scope.items[0];
+    var desc = user.description;		
+    user.description = $scope.searchText;
+    Users.api.update({description:desc},{description:user.description}, function(success)
+      {console.log(success)},
+      function(error){console.log(error)});		
+  };
+
+  $scope.delete = function(user, idx){     
+    Users.api.delete({id:user.id},
+      function(success){
+        $scope.pagedItems.splice(idx, 1);
+        for(var i in $scope.items){
+          if($scope.items[i].id==user.id){
+            $scope.items.splice(i,1);
+            break;
+          }		
+        };
+        $scope.search(); 
+      },
+      function(error){
+        alert('error');
+      }
+      );		
+  };	  
+}
+
+
+UserListController.$inject = ['$rootScope','$location','$scope','$filter','Users', 'authService']; ;
+function UserViewController($location, $scope, $routeParams, Users)
+{
+  $scope.$on('event:auth-loginRequired', function() {
+    $location.path('/login');
+    console.log('login required')
+  });
+
+  $scope.user =Users.api.get({id:$routeParams.id}, function(project) {
+  });
+
+  $scope.saveUser = function(user) {
+    Users.api.update({description:desc},{description:user.description}, function(success){
+      console.log(success)
+    },
+    function(error){console.log(error)});    
+  }
+}
+
+UserViewController.$inject = ['$location','$scope','$routeParams','Users'];
+
+
+;
+'use strict';
+myApp.factory('Users', ['$resource', function($resource){
+  return {
+    api: $resource('http://localhost/ci-regen/regen/api/users/:id',{},{
       update: {
         method: 'PUT'
       }                   
